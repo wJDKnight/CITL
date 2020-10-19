@@ -1,0 +1,7 @@
+Input: 
+  cur matrix; cha matrix; gene name; cluster labels (optional)
+Dependency：
+  R package bnlearn; functions.R
+Output:
+  results.txt a "from-to" table
+  
