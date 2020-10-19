@@ -3,5 +3,5 @@ Input:
 Dependency：
   R package bnlearn; snow
 Output:
-  results.txt a "from-to" table
+  results.csv a "from-to" table
   
