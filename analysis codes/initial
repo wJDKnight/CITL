@@ -1,7 +1,7 @@
 Input: 
-  cur matrix; cha matrix; gene name; cluster labels (optional)
+  current expression matrix spliced.csv; changing expression matrix delta_s.csv; gene name list gene_names.csv; cluster labels (optional)
 Dependency：
-  R package bnlearn; functions.R
+  R package bnlearn
 Output:
   results.txt a "from-to" table
   
