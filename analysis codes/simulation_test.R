@@ -9,7 +9,7 @@ ONESTAGE = F # multi-trace or single-trace simualtion
 INCLUDE_S = F #whether include stages in construction 
 LATENT=F #whether consider latent variables
 LAT_p=0.9 #after remove some variables, how many remains
-discretized=F #whether to discretize simulated data before structure learning
+discretized=T #whether to discretize simulated data before structure learning
 test_method = "mi-g-sh" #CI test method, details in bnlearn packages
 
 maxsx =floor(sqrt(n_nodes)) #the maximum allowed size of the conditioning sets
