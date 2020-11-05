@@ -1,23 +1,23 @@
 library(bnlearn)
 source("functions_s.R")
 
-n_nodes=50
+n_nodes=50 # the number of nodes.
 NOISE=1 #random niose
-SNOSIE=0.2 #noise of h0 in each stage
-SSIZE=1000 #each stage size, if only one stage, it is larger
-ONESTAGE = F
+SNOSIE=0.2 #variance of the distribution generating X^pre in each trace
+SSIZE=1000 #each trace size, if only one stage, it can be larger
+ONESTAGE = F # multi-trace or single-trace simualtion
 INCLUDE_S = F #whether include stages in construction 
 LATENT=F #whether consider latent variables
 LAT_p=0.9 #after remove some variables, how many remains
-discretized=F #whether to discretize simulated data
-test_method = "mi-g-sh" #CI test method,depending on whether discretizing data
+discretized=F #whether to discretize simulated data before structure learning
+test_method = "mi-g-sh" #CI test method, details in bnlearn packages
 
-#the maximum allowed size of the conditioning sets
-maxsx =floor(sqrt(n_nodes))
+maxsx =floor(sqrt(n_nodes)) #the maximum allowed size of the conditioning sets
+
 #maxsx=NULL
+mlog=runif(3,0,2) # the mean of 3 traces' distributions.
+#print(mlog)
 
-mlog=runif(3,0,2)
-print(mlog)
 ran=random.graph(c(LETTERS[1:(n_nodes/2)],letters[1:(n_nodes/2)]))
 models<-modelstring(ran)
 #get a list with effect$cause
