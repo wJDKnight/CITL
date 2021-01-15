@@ -8,11 +8,13 @@ library(snow)
 
 source("./functions_s.R")
 
-n_cluster=10
+args<-commandArgs(T) 
 
-Spliced<-read.csv('Spliced.csv',header = F)
-delta_s<-read.csv('delta_s.csv',header = F)
-gene_names<-read.csv('gene_names.csv',header=F,stringsAsFactors = F)
+n_cluster=args[4]
+
+Spliced<-read.csv(args[1],header = F)
+delta_s<-read.csv(args[2],header = F)
+gene_names<-read.csv(args[3],header=F,stringsAsFactors = F)
 s_gene_names<-paste0(gene_names[1,],"_1")
 colnames(Spliced)<-s_gene_names
 de_gene_names<-paste0(gene_names[1,],"_2")
@@ -20,7 +22,7 @@ colnames(delta_s)<-de_gene_names
 
 maxsx<-floor(sqrt(ncol(Spliced)))
 
-stage = read.csv("cluster_label.csv",header = F)[,1]
+#stage = read.csv("cluster_label.csv",header = F)[,1]
 
 
 cl=makeCluster(n_cluster,type = "SOCK")
