@@ -1,7 +1,9 @@
-prepared data
+Prepared data:
+
   current expression matrix (Spliced.csv); changing expression matrix (delta_s.csv); gene name list (gene_names.csv).
   
 Dependency：
+
   R package bnlearn; snow
   
 
@@ -13,6 +15,7 @@ Input Parameters:
     n_cluster: the number of computational threads
     
 Output:
+
   results.csv a "from-to" table recording time-lagged causal pairs
     
     
