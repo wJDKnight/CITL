@@ -2,12 +2,13 @@
 Causal inference with time-lagged information
 
 The RNA velocity should be pre-calculated (http://velocyto.org/).
-
-Input of CITL: 
-  current expression matrix (spliced.csv); changing expression matrix (delta_s.csv); gene name list (gene_names.csv)
   
 Dependency：
   R package: bnlearn; snow
   
+Usage:
+
+  Rscript CITL.R Spliced_path changing_path gene n_cluster
+
 Output:
   a "from-to" table recording the time-lagged causal gene pairs and their cur_cur/cur_cha value (results.csv)
