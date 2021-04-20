@@ -20,6 +20,6 @@ A "from-to" table recording the time-lagged causal gene pairs and their cur_cur/
 
 # Tutorials
 
-## [Preparing data](https://github.com/wJDKnight/CITL/blob/main/tutorial/preparing_data_rmk.html)
+## [Preparing data](https://wjdknight.github.io/CITL/tutorial/preparing_data_rmk.html)
 
 ## [Custom CITL]()
