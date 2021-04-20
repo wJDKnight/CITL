@@ -5,6 +5,7 @@ Here is the R implementation of CITL, including how to prapare data and how to a
   R packages: bnlearn; snow  
 
 # Basic usage
+    cd analysis
     Rscript CITL.R Spliced_path changing_path gene_name n_cluster
 ## Input Parameters  
 Input data: current expression matrix (Spliced.csv); changing expression matrix (delta_s.csv); genes' name list (gene_names.csv).
