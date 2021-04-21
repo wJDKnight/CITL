@@ -23,7 +23,7 @@ A "from-to" table recording the time-lagged causal gene pairs and their cur_cur/
 ## [Preparing data](https://github.com/wJDKnight/CITL/blob/main/tutorial/prepare_data.ipynb) 
 This tutorial includes the preparation of two data sets referred in out article is showed. It is about how to exact data from `.loom` file, the parameters out article adopted, and what the shape of requied data is.   
 ## [Custom CITL](https://wjdknight.github.io/CITL/tutorial/customCITL.html)   
-This tutorial uses a 
+This tutorial describes the procedures of CITL and lists important parameters, which are the same as those in the article. 
 
 # Reference
 Wei et al.(2021), Inferring time-lagged causality using the derivative of single-cell expression
