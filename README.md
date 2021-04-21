@@ -20,7 +20,7 @@ A "from-to" table recording the time-lagged causal gene pairs and their cur_cur/
 
 # Tutorials
 
-## [Preparing data](https://wjdknight.github.io/CITL/tutorial/preparing_data_rmk.html) 
+## [Preparing data](https://wjdknight.github.io/CITL/tutorial/prepare_data.ipynb) 
 This tutorial includes the preparation of two data sets referred in out article is showed. It is about how to exact data from `.loom` file, the parameters out article adopted, and what the shape of requied data is.   
 ## [Custom CITL](https://wjdknight.github.io/CITL/tutorial/customCITL.html)   
 This tutorial uses a 
