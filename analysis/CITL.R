@@ -41,15 +41,10 @@ for (i in 1:nrow(pure_direct_A1B2_arcs)) {
   a=pure_direct_A1B2_arcs[i,1]
   b=pure_direct_A1B2_arcs[i,2]
   
-  #some gene names have problem
-  #if (strsplit(a,"")[[1]][1]=="X" &strsplit(a,"")[[1]][1]!="Y") a=substring(a,2,100)
-  #if (strsplit(b,"")[[1]][1]=="X" &strsplit(b,"")[[1]][1]!="Y") b=substring(b,2,100)
-  
-  cur_cur=cor(spliced[[a]],spliced[[b]])
-  cur_cha=cor(spliced[[a]],delta[[b]])
-  p=ci.test(a,b,"label",spliced,test = "mi-cg")$p.value
-  
-  x=data.frame(from=a,to=b,type=type,cur_cur=cur_cur,cur_cha=cur_cha,p.value=p)
+  cur_cur=cor(Spliced[[paste0(a,"_1")]],Spliced[[paste0(b,"_1")]])
+  cur_cha=cor(Spliced[[paste0(a,"_1")]],delta_s[[paste0(b,"_2")]])
+  cur_sub=cor(Spliced[[paste0(a,"_1")]],(delta_s[[paste0(b,"_2")]]+Spliced[[paste0(b,"_1")]]))
+  x=data.frame(from=a,to=b,cur_cur=cur_cur,cur_cha=cur_cha,cur_sub=cur_sub)
   
   sum_results=rbind(sum_results,x)
 }

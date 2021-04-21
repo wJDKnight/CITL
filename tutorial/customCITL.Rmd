@@ -1,7 +1,5 @@
 ---
 title: "Custom CITL"
-author: "Wei Huan Huan"
-date: "2021/4/20"
 output: html_document
 ---
 
@@ -9,22 +7,84 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Basic Usage
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+CITL can infer time-lagged causal relationships between genes from single-cell RNA-sequencing data.  With the data prepared, the easiest way to use CITL is the command line script.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{bash basic, eval=FALSE, include=TRUE}
+cd analysis    
+Rscript CITL.R Spliced_path changing_path gene_name n_cluster
 ```
 
-## Including Plots
+where    
 
-You can also embed plots, for example:
+    Spliced_path: path to Spliced.csv
+    changing_path: path to delta_s.csv
+    gene_name: path to gene_names.csv
+    n_cluster: the number of computational threads
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+Input data includes current expression matrix (Spliced.csv), changing expression matrix (delta_s.csv) and genes' name list (gene_names.csv). How to obtain the data and the requirements of the data are described in tutorial of [preparing data](https://github.com/wJDKnight/CITL/blob/main/tutorial/prepare_data.ipynb). CITL also supports parallel computation by setting n_cluster more than 1, which will fast the inference in large data sets. 
+    
+## Detailed procedures and parameters of CITL
+To enable users to modify the CITL according to different demands, the detailed procedures and parameters of CITL are shown bellow. We prepared a small datasets for tests. It is a part of data set 2 in the CITL article (Wei et al., 2021). 
+
+### 1
+First, libraries, source codes and data should be loaded. 
+```{r warning=FALSE}
+library(bnlearn)
+library(snow)
+
+source("../analysis/functions_s.R")
+
+Spliced<-read.csv("../test/Spliced_test.csv",header = F)
+delta_s<-read.csv("../test/delta_s_test.csv",header = F)
+gene_names<-read.csv("../test/gene_names_test.csv",header=F,stringsAsFactors = F)
+s_gene_names<-paste0(gene_names[1,],"_1")
+colnames(Spliced)<-s_gene_names
+de_gene_names<-paste0(gene_names[1,],"_2")
+colnames(delta_s)<-de_gene_names
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### 2
+Second, perform conditional independence test between the current and changing expression levels of genes. 
+```{r}
+
+all_data<-cbind(Spliced,delta_s)
+bn=pc.stable(all_data,max.sx=floor(sqrt(ncol(gene_names))),undirected = T, alpha = 0.05, test = "cor")
+
+```
+
+#### Parameters
+That there are some parameters could be changed. The value of the parameters in this tutorial is the same as that in the article.     
+`max.sx` is the maximum allowed size of the conditioning sets used in conditional independence tests (CI tests). It decides how many conditions are considered means "conditioning on every circumstance." The larger it is, the stricter the test is and the slower the calculation performs. In the article, we use the square root of the number of genes as the maximum size.    
+`alpha` is the target nominal type I error rate for the CI tests.     
+`test` assigns the type of CI test to be used. `cor` means the exact Student's t test for Pearson's linear correlation. There are many tests provided by the R package *bnlearn*.   
+Except for `pc.stable`, *bnlearn* provides many algorithms to calculate conditional independency. The algorithms could be used as alternative options.
+
+### 3
+Third, we select the gene pairs whose current expression level is connected to other's changing expression level. Based on *Time-lagged assumption*, these pairs are time-lagged causal pairs.   
+
+```{r}
+A1B2_arcs<-arcs.1.2(bn) 
+nodup_A1B2_arcs<-A1B2_arcs[!duplicated(A1B2_arcs),]
+pure_direct_A1B2_arcs<-rm.bidirect(nodup_A1B2_arcs)$no_bidirect_arcs
+
+sum_results<-data.frame()
+for (i in 1:nrow(pure_direct_A1B2_arcs)) {
+  a=pure_direct_A1B2_arcs[i,1]
+  b=pure_direct_A1B2_arcs[i,2]
+  
+  cur_cur=cor(Spliced[[paste0(a,"_1")]],Spliced[[paste0(b,"_1")]])
+  cur_cha=cor(Spliced[[paste0(a,"_1")]],delta_s[[paste0(b,"_2")]])
+  cur_sub=cor(Spliced[[paste0(a,"_1")]],(delta_s[[paste0(b,"_2")]]+Spliced[[paste0(b,"_1")]]))
+  x=data.frame(from=a,to=b,cur_cur=cur_cur,cur_cha=cur_cha,cur_sub=cur_sub)
+  
+  sum_results=rbind(sum_results,x)
+}
+head(sum_results)
+```
+Above is the summary of inferred causal pairs in the test data set.
+
+## Reference 
+
+Inferring time-lagged causality using the derivative of single-cell expression
