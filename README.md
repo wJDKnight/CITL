@@ -3,7 +3,7 @@ CITL addresses the limitations of the existing methods for inferring time-lagged
 
 CITL is running in [R](https://www.r-project.org/), a free software environment for statistical computing. R support a wide variety of UNIX platforms, Windows and MacOS, which means that CITL could run on many platforms. The instruction of installing R is at [here](https://cran.r-project.org/doc/manuals/r-release/R-admin.html).
 
-Here is the command-line tool of CITL. It can easily cooperate with other programming environments. If you are only using R, the R package version of CITL is more convenient to invoke， which is at https://github.com/wJDKnight/CITL-Rpackage.
+Here is the command-line tool of CITL. It can easily cooperate with other programming environments. If you are only using R, the R package version of CITL is more convenient to invoke， which is at https://github.com/wJDKnight/CITL-Rpackage. Both the command-line tool and R package can run indenpendently.
 
 The instructions about how to prapare data and how to adopt CITL on the data are also included here. Before using CITL, annotations of unspliced/spliced reads could be obtained using [velocyto CLI](http://velocyto.org/velocyto.py/tutorial/cli.html) or [kallisto](https://linnarssonlab.org/loompy/kallisto/index.html) first.   
 
