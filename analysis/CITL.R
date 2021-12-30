@@ -10,7 +10,7 @@ source("./functions_s.R")
 
 args<-commandArgs(T) 
 
-n_cluster=args[4]
+n_cluster=as.numeric(args[4])
 
 Spliced<-read.csv(args[1],header = F)
 delta_s<-read.csv(args[2],header = F)
